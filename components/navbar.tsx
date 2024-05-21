@@ -32,37 +32,6 @@ import {
 import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
-	const router = useRouter();
-
-	const handleMenuToggle = () => {
-		setIsMenuOpen(!isMenuOpen);
-	};
-
-	const handleMenuItemClick = () => {
-		setIsMenuOpen(false);
-	};
-
-	const searchInput = (
-		<Input
-			aria-label="Search"
-			classNames={{
-				inputWrapper: "bg-default-100",
-				input: "text-sm",
-			}}
-			endContent={
-				<Kbd className="hidden lg:inline-block" keys={["command"]}>
-					K
-				</Kbd>
-			}
-			labelPlacement="outside"
-			placeholder="Search..."
-			startContent={
-				<SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-			}
-			type="search"
-		/>
-	);
 
 	return (
 		<NextUINavbar isBlurred={true} maxWidth="xl" position="sticky">
@@ -79,17 +48,16 @@ export const Navbar = () => {
 					<GithubIcon className="text-default-500" />
 				</Link>
 				<ThemeSwitch />
-				<NavbarMenuToggle onClick={handleMenuToggle} />
+				<NavbarMenuToggle />
 			</NavbarContent>
 
-			<NavbarMenu isOpen={isMenuOpen}>
+			<NavbarMenu>
 				<div className="mx-4 mt-2 flex flex-col gap-2 lg:mx-4 lg:mt-2 lg:flex lg:flex-col lg:gap-2 sm:flex-col sm:gap-2 lg:ml-[7rem]">
 					{siteConfig.navMenuItems.map((item, index) => {
 						const isActive = router.pathname === item.href;
 						return (
 							<NavbarMenuItem key={`${item}-${index}`}>
 								<Link
-									onClick={handleMenuItemClick}
 									color={
 										isActive
 											? "primary"
