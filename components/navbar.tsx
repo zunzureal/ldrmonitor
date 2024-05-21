@@ -32,6 +32,7 @@ import {
 import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
+	const router = useRouter();
 
 	return (
 		<NextUINavbar isBlurred={true} maxWidth="xl" position="sticky">
