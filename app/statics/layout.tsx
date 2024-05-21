@@ -1,4 +1,4 @@
-export default function PricingLayout({
+export default function StaticsLayout({
 	children,
 }: {
 	children: React.ReactNode;
