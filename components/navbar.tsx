@@ -1,10 +1,12 @@
+"use client"
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
 	Navbar as NextUINavbar,
 	NavbarContent,
 	NavbarMenu,
 	NavbarMenuToggle,
 	NavbarBrand,
-	NavbarItem,
 	NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
@@ -30,6 +32,17 @@ import {
 import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const router = useRouter();
+
+	const handleMenuToggle = () => {
+		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const handleMenuItemClick = () => {
+		setIsMenuOpen(false);
+	};
+
 	const searchInput = (
 		<Input
 			aria-label="Search"
@@ -66,28 +79,32 @@ export const Navbar = () => {
 					<GithubIcon className="text-default-500" />
 				</Link>
 				<ThemeSwitch />
-				<NavbarMenuToggle />
+				<NavbarMenuToggle onClick={handleMenuToggle} />
 			</NavbarContent>
 
-			<NavbarMenu>
+			<NavbarMenu isOpen={isMenuOpen}>
 				<div className="mx-4 mt-2 flex flex-col gap-2 lg:mx-4 lg:mt-2 lg:flex lg:flex-col lg:gap-2 sm:flex-col sm:gap-2 lg:ml-[7rem]">
-					{siteConfig.navMenuItems.map((item, index) => (
-						<NavbarMenuItem key={`${item}-${index}`}>
-							<Link
-								color={
-									index === 2
-										? "primary"
-										: index === siteConfig.navMenuItems.length - 1
-											? "danger"
-											: "foreground"
-								}
-								href={item.href} // replace "#" with item.url
-								size="lg"
-							>
-								{item.label}
-							</Link>
-						</NavbarMenuItem>
-					))}
+					{siteConfig.navMenuItems.map((item, index) => {
+						const isActive = router.pathname === item.href;
+						return (
+							<NavbarMenuItem key={`${item}-${index}`}>
+								<Link
+									onClick={handleMenuItemClick}
+									color={
+										isActive
+											? "primary"
+											: index === siteConfig.navMenuItems.length - 1
+												? "danger"
+												: "foreground"
+									}
+									href={item.href} // replace "#" with item.url
+									size="lg"
+								>
+									{item.label}
+								</Link>
+							</NavbarMenuItem>
+						);
+					})}
 				</div>
 			</NavbarMenu>
 		</NextUINavbar>
