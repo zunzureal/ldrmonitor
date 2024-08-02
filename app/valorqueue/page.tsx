@@ -18,7 +18,7 @@ const ValorQueuePage: React.FC = () => {
     useEffect(() => {
         const fetchQueue = async () => {
             try {
-                const res = await fetch('http://localhost:3000/api/queue');
+                const res = await fetch('/api/queue');
                 if (!res.ok) throw new Error(`Failed to fetch, status: ${res.status}`);
                 const queueData = await res.json();
                 console.log("Fetched Queue Data:", queueData); // Debugging line
