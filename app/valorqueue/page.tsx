@@ -84,7 +84,8 @@ const ValorQueuePage: React.FC = () => {
                 return (
                     <div key={item.id || index}> {/* Use item.id or index as fallback for key */}
                         <Card className="mt-4">
-                            <CardHeader>Queue #{item.id} - {item.name} - {item.url}</CardHeader>
+                            <CardHeader>Queue #{item.id} - {item.name}</CardHeader>
+                            <img src={item.url} alt={item.name} style={{ width: '100%', height: 'auto' }} />
                         </Card>
                     </div>
                 );
