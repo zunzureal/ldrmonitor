@@ -76,9 +76,9 @@ const ValorQueuePage: React.FC = () => {
         <div>
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
-                <Input isClearable bordered labelPlaceholder="Name" className='mt-2' value={name} onChange={handleNameChange} aria-label="Name" />
-                <Input isClearable bordered labelPlaceholder="URL" className='mt-2' value={url} onChange={handleUrlChange} aria-label="URL" />
-                <Button auto color="primary" type="submit" disabled={isSubmitting} className='mt-8'>Add to Queue</Button>
+                <Input isClearable className='mt-2' value={name} label="name" onChange={handleNameChange} aria-label="Name" />
+                <Input isClearable className='mt-2' value={url} label="picture url" onChange={handleUrlChange} aria-label="URL" />
+                <Button color="primary" type="submit" disabled={isSubmitting} className='mt-8'>Add to Queue</Button>
             </form>
             {queue.map((item, index) => {
                 return (
