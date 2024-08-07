@@ -60,8 +60,8 @@ const ValorQueuePage: React.FC = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !url.trim()) {
-            setError('Name and URL are required');
+        if (!name.trim()) {
+            setError('Name is required');
             return;
         }
         await addToQueue(name, url);
