@@ -1,8 +1,8 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-	name: "zunzu",
-	description: "Just a daily of zunzu life.",
+	name: "Punyapat Chanthakhun",
+	description: "Welcome to my world.",
 	navItems: [
 		{
 			label: "Home",
