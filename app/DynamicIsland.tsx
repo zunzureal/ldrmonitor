@@ -1,38 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, CSSProperties } from 'react';
 import { GithubIcon } from "@/components/icons";
+import { useTheme } from 'next-themes';
 
 const DynamicIsland = () => {
   const [visible, setVisible] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { theme, resolvedTheme } = useTheme();
+  const isDark = theme === 'dark' || resolvedTheme === 'dark';
 
   useEffect(() => {
     setVisible(true);
-    // Check if the user prefers dark mode
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    setIsDarkMode(darkModeMediaQuery.matches);
-
-    // Add an event listener to handle changes in the user's color scheme preference
-    const handleChange = (e: MediaQueryListEvent) => {
-      setIsDarkMode(e.matches);
-    };
-    darkModeMediaQuery.addEventListener('change', handleChange);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      darkModeMediaQuery.removeEventListener('change', handleChange);
-    };
   }, []);
 
   return (
-    <div style={{ ...styles.container, ...(visible ? styles.visible : styles.hidden), ...(isDarkMode ? styles.dark : styles.light) }}>
+    <div style={{ ...styles.container, ...(visible ? styles.visible : styles.hidden), ...(isDark ? styles.dark : styles.light) }}>
       <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={styles.link}>
-        <GithubIcon style={{ color: isDarkMode ? '#fff' : '#000' }} />
+        <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
     </div>
   );
 };
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   container: {
     position: 'fixed',
     bottom: '20px', // Adjusted to float above the bottom
