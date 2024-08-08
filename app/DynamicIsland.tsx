@@ -2,6 +2,8 @@ import React, { useEffect, useState, CSSProperties } from 'react';
 import { GithubIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
+import styles from './DynamicIsland.module.css'; // Import the CSS module
 
 const DynamicIsland = () => {
   const [visible, setVisible] = useState(false);
@@ -13,15 +15,18 @@ const DynamicIsland = () => {
   }, []);
 
   return (
-    <div style={{ ...styles.container, ...(visible ? styles.visible : styles.hidden), ...(isDark ? styles.dark : styles.light) }}>
-      <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" style={styles.link}>
+    <div style={{ ...inlineStyles.container, ...(visible ? inlineStyles.visible : inlineStyles.hidden), ...(isDark ? inlineStyles.dark : inlineStyles.light) }}>
+      <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" style={inlineStyles.link}>
         <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
+      <Link href="/event" passHref>
+        <span className={`${styles.hoverEffect} font-semibold ml-4`}>Event</span>
+      </Link>
     </div>
   );
 };
 
-const styles: { [key: string]: CSSProperties } = {
+const inlineStyles: { [key: string]: CSSProperties } = {
   container: {
     position: 'fixed',
     bottom: '20px', // Adjusted to float above the bottom
@@ -36,6 +41,7 @@ const styles: { [key: string]: CSSProperties } = {
     border: '1px solid rgba(0, 0, 0, 0)', // Fully transparent border
     borderRadius: '10px', // Added border radius for rounded corners
     transition: 'transform 0.5s ease-out, opacity 0.5s ease-out', // Animation properties
+    gap: '10px', // Added gap between elements
   },
   visible: {
     transform: 'translateX(-50%) translateY(0)', // Final position
