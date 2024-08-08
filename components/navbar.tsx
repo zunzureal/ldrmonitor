@@ -45,9 +45,9 @@ export const Navbar = () => {
 			</NavbarContent>
 
 			<NavbarContent className="basis-1 pl-4" justify="end">
-				<Link isExternal href={siteConfig.links.github} aria-label="Github">
+				{/* <Link isExternal href={siteConfig.links.github} aria-label="Github">
 					<GithubIcon className="text-default-500" />
-				</Link>
+				</Link> */}
 				<ThemeSwitch />
 				<NavbarMenuToggle />
 			</NavbarContent>

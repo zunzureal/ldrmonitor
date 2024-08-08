@@ -45,7 +45,7 @@ export default function RootLayout({
 							{children}
 						</main>
 						<footer className="flex items-center justify-center pt-[50rem] py-4">
-							<Link
+							{/* <Link
 								isExternal
 								className="flex items-center gap-1 text-current"
 								href="https://github.com/zunzureal"
@@ -53,7 +53,7 @@ export default function RootLayout({
 							>
 								<span className="text-default-600">Made with 💖 by</span>
 								<p className="text-primary">zunzu</p>
-							</Link>
+							</Link> */}
 						</footer>
 					</div>
 				</Providers>

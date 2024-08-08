@@ -7,11 +7,13 @@ import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import Spline from '@splinetool/react-spline';
+import DynamicIsland from './DynamicIsland'; // Import the new component
 
 export default function Home() {
-	return (
-		<div>
-			<Spline className="absolute" scene="https://prod.spline.design/mHzmMH9Ml2xmcW2S/scene.splinecode" />
-		</div>
-	);
+    return (
+        <div>
+            <Spline className="absolute" scene="https://prod.spline.design/mHzmMH9Ml2xmcW2S/scene.splinecode" />
+            <DynamicIsland /> {/* Use the new component */}
+        </div>
+    );
 }
