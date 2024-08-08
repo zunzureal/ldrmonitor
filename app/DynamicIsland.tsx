@@ -1,5 +1,6 @@
 import React, { useEffect, useState, CSSProperties } from 'react';
 import { GithubIcon } from "@/components/icons";
+import { siteConfig } from "@/config/site";
 import { useTheme } from 'next-themes';
 
 const DynamicIsland = () => {
@@ -13,7 +14,7 @@ const DynamicIsland = () => {
 
   return (
     <div style={{ ...styles.container, ...(visible ? styles.visible : styles.hidden), ...(isDark ? styles.dark : styles.light) }}>
-      <a href="https://github.com" target="_blank" rel="noopener noreferrer" style={styles.link}>
+      <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" style={styles.link}>
         <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
     </div>
