@@ -1,12 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.hoverEffect {
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.hoverEffect:hover {
-  color: #0070f3; /* Change to your desired hover color */
-  transform: scale(1.1); /* Slightly enlarge the text */
-}
