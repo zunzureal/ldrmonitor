@@ -12,7 +12,9 @@ import DynamicIsland from './DynamicIsland'; // Import the new component
 export default function Home() {
     return (
         <div>
-            <Spline className="absolute" scene="https://prod.spline.design/mHzmMH9Ml2xmcW2S/scene.splinecode" />
+            <Spline className="absolute"
+                scene="https://prod.spline.design/ixfpXeueU33ARBkh/scene.splinecode"
+            />
             <DynamicIsland /> {/* Use the new component */}
         </div>
     );
