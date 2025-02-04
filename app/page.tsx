@@ -10,6 +10,7 @@ import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import Spline from '@splinetool/react-spline';
 import DynamicIsland from './DynamicIsland'; // Import the new component
+import '@/styles/globals.css'; // Ensure the CSS file is imported
 
 const languages = [
   "My name is",
@@ -23,6 +24,7 @@ const languages = [
 export default function Home() {
     const titleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
     const [currentLanguage, setCurrentLanguage] = useState(0);
+    const [fade, setFade] = useState(true);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -56,7 +58,11 @@ export default function Home() {
 
     useEffect(() => {
         const interval = setInterval(() => {
+            setFade(false);
             setCurrentLanguage((prev) => (prev + 1) % languages.length);
+            setTimeout(() => {
+                setFade(true);
+            }, 1000); // Wait for fade-out to complete before setting fade-in
         }, 3000); // Change language every 3 seconds
 
         return () => clearInterval(interval);
@@ -66,7 +72,9 @@ export default function Home() {
         <section>
             <DynamicIsland />
             <div className="justify-center text-center mt-[300px]">
-                <a className="fade-in rotate justify-center text-center font-kanit font-normal text-[50px]">{languages[currentLanguage]}</a>
+                <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[50px] ${fade ? 'show' : ''}`}>
+                    {languages[currentLanguage]}
+                </a>
                 <a className="ml-[15px] font-kanit text-[50px] text-primary">zunzu</a>
             </div>
             <div className="justify-center text-center mt-[340px]">
