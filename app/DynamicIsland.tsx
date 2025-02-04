@@ -19,8 +19,14 @@ const DynamicIsland = () => {
       <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" style={inlineStyles.link}>
         <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
+      <Link href="/about" passHref>
+        <span className={`${styles.hoverEffect} font-semibold ml-4`}>About</span>
+      </Link>
       <Link href="/event" passHref>
         <span className={`${styles.hoverEffect} font-semibold ml-4`}>Event</span>
+      </Link>
+      <Link href="/cv" passHref>
+        <span className={`${styles.hoverEffect} font-semibold ml-4`}>CV</span>
       </Link>
     </div>
   );
@@ -34,14 +40,14 @@ const inlineStyles: { [key: string]: CSSProperties } = {
     transform: 'translateX(-50%)', // Center horizontally
     backdropFilter: 'blur(10px)', // Blur effect
     boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-    padding: '10px 20px', // Adjusted padding
+    padding: '10px 30px', // Adjusted padding
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     border: '1px solid rgba(0, 0, 0, 0)', // Fully transparent border
-    borderRadius: '10px', // Added border radius for rounded corners
+    borderRadius: '100px', // Added border radius for rounded corners
     transition: 'transform 0.5s ease-out, opacity 0.5s ease-out', // Animation properties
-    gap: '10px', // Added gap between elements
+    gap: '20px', // Added gap between elements
   },
   visible: {
     transform: 'translateX(-50%) translateY(0)', // Final position

@@ -49,10 +49,10 @@ export const Navbar = () => {
 					<GithubIcon className="text-default-500" />
 				</Link> */}
 				<ThemeSwitch />
-				<NavbarMenuToggle />
+				{/* <NavbarMenuToggle /> */}
 			</NavbarContent>
 
-			<NavbarMenu>
+			{/* <NavbarMenu>
 				<div className="mx-4 mt-2 flex flex-col gap-2 lg:mx-4 lg:mt-2 lg:flex lg:flex-col lg:gap-2 sm:flex-col sm:gap-2 lg:ml-[7rem]">
 					{siteConfig.navMenuItems.map((item, index) => {
 						return (
@@ -67,7 +67,7 @@ export const Navbar = () => {
 						);
 					})}
 				</div>
-			</NavbarMenu>
+			</NavbarMenu> */}
 		</NextUINavbar>
 	);
 };

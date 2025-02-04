@@ -16,7 +16,7 @@ export default function EventPage() {
       title: "Amity Hackathon",
       date: "18 March 2023 - 19 March 2023",
       role: "Role",
-      details: ["- Participants (Pitching Round)"],
+      details: ["- Participants (Pitching Round)", "Learn more "],
       image: "AmityHackathon.jpg",
     },
   ];
