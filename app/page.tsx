@@ -10,7 +10,6 @@ import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
 import Spline from '@splinetool/react-spline';
 import DynamicIsland from './DynamicIsland'; // Import the new component
-import './page.css'; // Ensure the CSS file is imported
 
 const languages = [
   "My name is",
