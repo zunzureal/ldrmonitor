@@ -77,9 +77,9 @@ export default function Home() {
                 </a>
                 <a className="ml-[15px] font-kanit text-[50px] text-primary">zunzu</a>
             </div>
-            <div className="justify-center text-center mt-[360px]">
+            {/* <div className="justify-center text-center mt-[360px]">
                 <h1 ref={el => titleRefs.current[0] = el} className="fade-in justify-center text-center font-kanit text-[100px]">Under Maintenance</h1>
-                {/* <div className="text-center">
+                <div className="text-center">
                     <p ref={el => titleRefs.current[1] = el} className="fade-in">2023 - Nurse Chan is born</p>
                     <p ref={el => titleRefs.current[2] = el} className="fade-in">2023 - yed tood</p>
                     <p ref={el => titleRefs.current[3] = el} className="fade-in">2023 - Nurse Chan is born</p>
@@ -88,8 +88,8 @@ export default function Home() {
                     <p ref={el => titleRefs.current[6] = el} className="fade-in">2023 - yed tood</p>
                     <p ref={el => titleRefs.current[7] = el} className="fade-in">2023 - Nurse Chan is born</p>
                     <p ref={el => titleRefs.current[8] = el} className="fade-in">2023 - yed tood</p>
-                </div> */}
-            </div>
+                </div>
+            </div> */}
         </section>
     );
 }
