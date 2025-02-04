@@ -77,7 +77,7 @@ export default function Home() {
                 </a>
                 <a className="ml-[15px] font-kanit text-[50px] text-primary">zunzu</a>
             </div>
-            <div className="justify-center text-center mt-[340px]">
+            <div className="justify-center text-center mt-[360px]">
                 <h1 ref={el => titleRefs.current[0] = el} className="fade-in justify-center text-center font-kanit text-[100px]">Under Maintenance</h1>
                 {/* <div className="text-center">
                     <p ref={el => titleRefs.current[1] = el} className="fade-in">2023 - Nurse Chan is born</p>
