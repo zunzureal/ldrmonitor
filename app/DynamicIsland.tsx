@@ -1,9 +1,8 @@
-import React, { useEffect, useState, CSSProperties } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GithubIcon } from "@/components/icons";
 import { siteConfig } from "@/config/site";
 import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import styles from './DynamicIsland.module.css'; // Import the CSS module
 
 const DynamicIsland = () => {
   const [visible, setVisible] = useState(false);
@@ -15,18 +14,18 @@ const DynamicIsland = () => {
   }, []);
 
   return (
-    <div className={`${styles.container} ${visible ? styles.visible : styles.hidden} ${isDark ? styles.dark : styles.light}`}>
-      <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className={styles.link}>
+    <div className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 backdrop-blur-md shadow-lg p-4 flex justify-center items-center border border-transparent rounded-full transition-transform duration-500 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'} ${isDark ? 'bg-black bg-opacity-50 border-white border-opacity-20' : 'bg-white bg-opacity-80 border-black border-opacity-20'}`}>
+      <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-current">
         <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
       <Link href="/about" passHref>
-        <span className={`${styles.hoverEffect} font-semibold ml-4`}>About</span>
+        <span className="hover:underline font-semibold ml-4">About</span>
       </Link>
       <Link href="/event" passHref>
-        <span className={`${styles.hoverEffect} font-semibold ml-4`}>Event</span>
+        <span className="hover:underline font-semibold ml-4">Event</span>
       </Link>
       <Link href="/cv" passHref>
-        <span className={`${styles.hoverEffect} font-semibold ml-4`}>CV</span>
+        <span className="hover:underline font-semibold ml-4">CV</span>
       </Link>
     </div>
   );
