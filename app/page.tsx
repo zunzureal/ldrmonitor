@@ -92,7 +92,7 @@ export default function Home() {
 
     return (
         <section className="flex flex-col items-center justify-center min-h-screen">
-            <div className="justify-center text-center mt-[300px]">
+            <div className="justify-center text-center mt-[-50px]">
                 <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[50px] ${fade ? 'show' : ''}`}>
                     {languages[currentLanguage]}
                 </a>
