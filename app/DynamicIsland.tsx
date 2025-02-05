@@ -14,18 +14,18 @@ const DynamicIsland = () => {
   }, []);
 
   return (
-    <div className={`fixed bottom-5 left-1/2 transform -translate-x-1/2 backdrop-blur-md shadow-lg p-4 flex justify-center items-center border border-transparent rounded-full transition-transform duration-500 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'} ${isDark ? 'bg-black bg-opacity-50 border-white border-opacity-20' : 'bg-white bg-opacity-80 border-black border-opacity-20'}`}>
+    <div className={`fixed z-10 bottom-5 left-1/2 transform -translate-x-1/2 backdrop-blur-md shadow-lg p-4 flex justify-center items-center border border-transparent rounded-full transition-transform duration-500 ease-out ${visible ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'} ${isDark ? 'bg-black bg-opacity-50 border-white border-opacity-20' : 'bg-white bg-opacity-80 border-black border-opacity-20'}`}>
       <a href={siteConfig.links.github} target="_blank" rel="noopener noreferrer" className="flex items-center text-current">
         <GithubIcon style={{ color: isDark ? '#fff' : '#000' }} />
       </a>
       <Link href="/about" passHref>
-        <span className="hover:underline font-semibold ml-4">About</span>
+        <span className="hover:text-primary font-semibold ml-4">About</span>
       </Link>
-      <Link href="/event" passHref>
-        <span className="hover:underline font-semibold ml-4">Event</span>
+      <Link href="/blog" passHref>
+        <span className="hover:text-primary font-semibold ml-4">Blog</span>
       </Link>
       <Link href="/cv" passHref>
-        <span className="hover:underline font-semibold ml-4">CV</span>
+        <span className="hover:text-primary font-semibold ml-4">CV</span>
       </Link>
     </div>
   );
