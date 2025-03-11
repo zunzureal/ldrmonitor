@@ -24,6 +24,9 @@ const DynamicIsland = () => {
       <Link href="/blog" passHref>
         <span className="hover:text-primary font-semibold ml-4">Blog</span>
       </Link>
+      <Link href="/chatwithme" passHref>
+        <span className="hover:text-primary font-semibold ml-4">AI Chat (Beta)</span>
+      </Link>
       <Link href="https://drive.google.com/file/d/1IDZXwjA6Vojgcjw85etdM2xH_OftS_rO/view?usp=sharing" passHref>
         <span className="hover:text-primary font-semibold ml-4">CV</span>
       </Link>
