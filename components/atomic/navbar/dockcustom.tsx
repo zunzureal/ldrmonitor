@@ -69,12 +69,12 @@ const DATA = {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "#",
+        url: "https://github.com/zunzureal",
         icon: Icons.github,
       },
       LinkedIn: {
         name: "LinkedIn",
-        url: "#",
+        url: "https://www.linkedin.com/in/punyapat-chanthakhun-29373723b/",
         icon: Icons.linkedin,
       },
       chat: {
