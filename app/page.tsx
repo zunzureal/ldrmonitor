@@ -64,7 +64,7 @@ export default function Home() {
 
     return (
         <section className="relative flex flex-col items-center justify-center min-h-screen">
-            <div className="flex z-10 justify-center text-center">
+            <div className="flex z-10 justify-center text-center mt-[1000px]">
                 <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[1000px] ${fade ? 'show' : ''}`}>
                     {languages[currentLanguage]} <span className="z-10 font-kanit text-[50px] text-[blue]" >zunzu</span>
                 </a>
