@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from "lucide-react";
+import { CalendarIcon, HomeIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -59,24 +59,17 @@ const Icons = {
       ></path>
     </svg>
   ),
-  message: (props: IconProps) => (
-    <svg 
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-      >
-      <path d="M12 12V15M12 9H12.01M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z" stroke="#000000" strokeWidth="2" strokeLinecap="round" stroke-linejoin="round"/>
-    </svg>
-  )
 };
 
 const DATA = {
+  navbar: [
+    { href: "/", icon: HomeIcon, label: "Home" },
+  ],
   contact: {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://github.com/zunzureal",
+        url: "#",
         icon: Icons.github,
       },
       LinkedIn: {
@@ -84,15 +77,10 @@ const DATA = {
         url: "#",
         icon: Icons.linkedin,
       },
-      X: {
-        name: "X",
-        url: "#",
-        icon: Icons.x,
-      },
-      Chat: {
-        name: "Chat with zunzu (AI Beta)",
-        url: "#",
-        icon: Icons.message,
+      chat: {
+        name: "chat",
+        url: "/chat",
+        icon: Icons.email,
       },
     },
   },
@@ -103,6 +91,28 @@ export function DockCustom() {
     <div className="fixed flex-col items-center justify-center z-10 bottom-5 left-1/2 transform -translate-x-1/2">
       <TooltipProvider>
         <Dock direction="middle">
+          {DATA.navbar.map((item) => (
+            <DockIcon key={item.label}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link
+                    href={item.href}
+                    aria-label={item.label}
+                    className={cn(
+                      buttonVariants({ variant: "ghost", size: "icon" }),
+                      "size-12 rounded-full",
+                    )}
+                  >
+                    <item.icon className="size-4" />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{item.label}</p>
+                </TooltipContent>
+              </Tooltip>
+            </DockIcon>
+          ))}
+          <Separator orientation="vertical" className="h-full" />
           {Object.entries(DATA.contact.social).map(([name, social]) => (
             <DockIcon key={name}>
               <Tooltip>
@@ -119,7 +129,7 @@ export function DockCustom() {
                   </Link>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p className="font-kanit">{name}</p>
+                  <p>{name}</p>
                 </TooltipContent>
               </Tooltip>
             </DockIcon>
