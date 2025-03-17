@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import '../styles/globals.css';
+import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
+import { cn } from "@/lib/utils";
 
 const languages = [
     "My name is",
@@ -61,6 +63,17 @@ export default function Home() {
 
     return (
         <section className="flex flex-col items-center justify-center min-h-screen">
+             <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-25">
+                 <InteractiveGridPattern
+                     className={cn(
+                         "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
+                     )}
+                     width={20}
+                     height={20}
+                     squares={[80, 80]}
+                     squaresClassName="hover:fill-blue-500"
+                 />
+             </div>
             <div className="flex z-10 justify-center text-center">
                 <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[50px] ${fade ? 'show' : ''}`}>
                     {languages[currentLanguage]} <span className="z-10 font-kanit text-[50px] text-[blue]" >zunzu</span>
