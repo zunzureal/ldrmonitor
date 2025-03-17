@@ -24,11 +24,11 @@ export default function RootLayout({
             >
                 <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
                     <div className="relative flex flex-col h-screen">
-                        <Navbar />
+                        <DockCustom />
                         <main className="">
                             {children}
                         </main>
-                        <footer className="flex items-center justify-center pt-[50rem] py-4">
+                        <footer className="flex items-center justify-center py-4">
                             {/* <Link
                                 isExternal
                                 className="flex items-center gap-1 text-current"

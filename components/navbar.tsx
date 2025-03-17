@@ -9,7 +9,6 @@ import {
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import { ThemeSwitch } from "@/components/theme-switch";
 import {
 	TwitterIcon,
 	GithubIcon,
