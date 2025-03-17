@@ -19,6 +19,7 @@ import {
 } from "@/components/icons";
 
 import { Logo } from "@/components/icons";
+import '@/styles/globals.css';
 
 export const Navbar = () => {
 	const router = useRouter();
@@ -28,35 +29,10 @@ export const Navbar = () => {
 			<NavbarContent className="basis-1/5 sm:basis-full" justify="start">
 				<NavbarBrand as="li" className="gap-3 max-w-fit">
 					<NextLink className="flex justify-start items-center gap-1" href="/">
-						<p className="font-bold text-inherit">~./zunzu</p>
+						<h1 className="font-kanit font-normal">~./zunzu</h1>
 					</NextLink>
 				</NavbarBrand>
 			</NavbarContent>
-
-			<NavbarContent className="basis-1 pl-4" justify="end">
-				{/* <Link isExternal href={siteConfig.links.github} aria-label="Github">
-					<GithubIcon className="text-default-500" />
-				</Link> */}
-				<ThemeSwitch />
-				{/* <NavbarMenuToggle /> */}
-			</NavbarContent>
-
-			{/* <NavbarMenu>
-				<div className="mx-4 mt-2 flex flex-col gap-2 lg:mx-4 lg:mt-2 lg:flex lg:flex-col lg:gap-2 sm:flex-col sm:gap-2 lg:ml-[7rem]">
-					{siteConfig.navMenuItems.map((item, index) => {
-						return (
-							<NavbarMenuItem key={`${item}-${index}`}>
-								<Link
-									href={item.href} // replace "#" with item.url
-									size="lg"
-								>
-									{item.label}
-								</Link>
-							</NavbarMenuItem>
-						);
-					})}
-				</div>
-			</NavbarMenu> */}
 		</NextUINavbar>
 	);
 };
