@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import Link from "next/link";
-import '@/styles/globals.css'; // Ensure the CSS file is imported
+import '@/styles/globals.css';
 
 const languages = [
     "My name is",
@@ -64,8 +64,8 @@ export default function Home() {
 
     return (
         <section className="relative flex flex-col items-center justify-center min-h-screen">
-            <div className="relative z-10 justify-center text-center">
-                <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[50px] ${fade ? 'show' : ''}`}>
+            <div className="flex z-10 justify-center text-center">
+                <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[1000px] ${fade ? 'show' : ''}`}>
                     {languages[currentLanguage]} <span className="z-10 font-kanit text-[50px] text-[blue]" >zunzu</span>
                 </a>
             </div>

@@ -6,7 +6,7 @@ import { Providers } from "./providers";
 import { Navbar } from "@/components/navbar";
 import { Link } from "@nextui-org/link";
 import clsx from "clsx";
-import { DockCustom } from "@/components/atomic/navbar/dockcustom";
+import { DockCustom } from "@/components/atomic/navbar/dockcustom"
 
 export default function RootLayout({
     children,
@@ -30,6 +30,15 @@ export default function RootLayout({
                             {children}
                         </main>
                         <footer className="flex items-center justify-center pt-[50rem] py-4">
+                            {/* <Link
+                                isExternal
+                                className="flex items-center gap-1 text-current"
+                                href="https://github.com/zunzureal"
+                                title="zunzu github page"
+                            >
+                                <span className="text-default-600">Made with 💖 by</span>
+                                <p className="text-primary">zunzu</p>
+                            </Link> */}
                         </footer>
                     </div>
                 </Providers>
