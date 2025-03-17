@@ -25,7 +25,6 @@ export default function RootLayout({
                 <Providers themeProps={{ attribute: "class", defaultTheme: "light" }}>
                     <div className="relative flex flex-col h-screen">
                         <Navbar />
-                        <DockCustom />
                         <main className="">
                             {children}
                         </main>
