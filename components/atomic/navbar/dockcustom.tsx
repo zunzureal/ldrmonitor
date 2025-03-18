@@ -77,8 +77,13 @@ const DATA = {
         url: "https://www.linkedin.com/in/punyapat-chanthakhun-29373723b/",
         icon: Icons.linkedin,
       },
+      Projects: {
+        name: "Projects",
+        url: "/projects",
+        icon: Icons.email,
+      },
       chat: {
-        name: "chat",
+        name: "Chat",
         url: "/chat",
         icon: Icons.email,
       },
