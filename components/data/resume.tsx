@@ -206,8 +206,8 @@ export const DATA = {
     },
     {
       title: "CelestiAI Presale",
-      href: "https://magicui.design",
-      dates: "June 2023 - Present",
+      href: "https://presale.zunzu.dev",
+      dates: "Sep 2024",
       active: true,
       description:
         "Developed an Presale website for CelestiAI collab with RaniTube selling Anime AI Assitant",
