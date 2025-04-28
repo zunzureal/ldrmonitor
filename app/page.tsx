@@ -62,22 +62,14 @@ export default function Home() {
     }, []);
 
     return (
-        <section className="flex flex-col items-center justify-center min-h-screen">
-             <div className="absolute inset-0 flex items-center justify-center overflow-hidden opacity-25">
-                 <InteractiveGridPattern
-                     className={cn(
-                         "[mask-image:radial-gradient(400px_circle_at_center,white,transparent)]",
-                     )}
-                     width={20}
-                     height={20}
-                     squares={[80, 80]}
-                     squaresClassName="hover:fill-blue-500"
-                 />
-             </div>
-            <div className="flex z-10 justify-center text-center">
-                <a className={`fade-in rotate justify-center text-center font-kanit font-normal text-[50px] ${fade ? 'show' : ''}`}>
-                    {languages[currentLanguage]} <span className="z-10 font-kanit text-[50px] text-[blue]" >zunzu</span>
-                </a>
+        <section className="flex flex-col min-h-screen">
+            <div className="mt-[50px] text-center items-center justify-center">
+                <h1 className="font-kanit text-[20px] italic">~/zunzu</h1>
+                <h2 className="font-kanit text-[20px] italic">wall of blog</h2>
+            </div>
+            <div className="pt-[18px]">
+                <h1 className="justify-start items-start font-kanit pl-[54px] text-[32px] italic">Lastest Blog</h1>
+                <div className="ml-[52px] bg-black" style={{ width: '207px', height: '1px' }}></div>
             </div>
         </section>
     );
