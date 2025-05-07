@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import '../styles/globals.css';
 import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Card, CardHeader } from "@/components/ui/card";
 
 const languages = [
     "My name is",
@@ -70,6 +73,22 @@ export default function Home() {
             <div className="pt-[18px]">
                 <h1 className="justify-start items-start font-kanit pl-[54px] text-[32px] italic">Lastest Blog</h1>
                 <div className="ml-[52px] bg-black" style={{ width: '207px', height: '1px' }}></div>
+            </div>
+            <div>
+                <Card
+                    className="mt-8 mx-auto w-[90%] md:w-[75%] lg:w-[688px] h-[157px] rounded-[30px] relative overflow-hidden"
+                    style={{
+                        backgroundImage: "url('/grad.png')",
+                        backgroundPosition: "center",
+                        backgroundSize: "cover"
+                    }}
+                >
+                    <div className="absolute inset-0 bg-black/30"></div>
+                    <CardHeader className="pl-4 md:pl-8 lg:ml-[267px] relative z-10 text-white flex flex-col justify-center">
+                        <h3 className="text-lg md:text-xl lg:text-2xl font-bold">Latest Post Title</h3>
+                        <p className="text-sm md:text-base opacity-80">Brief description of your latest blog post</p>
+                    </CardHeader>
+                </Card>
             </div>
         </section>
     );
