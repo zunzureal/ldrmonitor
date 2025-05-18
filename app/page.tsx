@@ -1,178 +1,182 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import '../styles/globals.css';
-import { InteractiveGridPattern } from "@/components/magicui/interactive-grid-pattern";
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Card, CardHeader } from "@/components/ui/card";
-import { Chip } from "@heroui/chip";
+import { createClient } from '@supabase/supabase-js';
 
-// Mock data for blog cards
-const mockBlogPosts = [
-    {
-        id: 1,
-        title: "Getting Started with Next.js",
-        description: "A beginner's guide to setting up your first Next.js project",
-        image: "/grad.png",
-        urls: "graduation",
-        category: "music"
-    },
-    {
-        id: 2,
-        title: "CSS Grid Layout Mastery",
-        description: "Learn how to create complex layouts with CSS Grid",
-        image: "/grad.png",
-        urls: "",
-        category: "music"
-    },
-    {
-        id: 3,
-        title: "React Hooks Deep Dive",
-        description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png",
-        urls: "",
-        category: "music"
-    },
-    {
-        id: 4,
-        title: "React Hooks Deep Dive",
-        description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png",
-        urls: "",
-        category: "music"
-    },
-    {
-        id: 5,
-        title: "React Hooks Deep Dive",
-        description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png",
-        urls: "",
-        category: "music"
-    }
-];
-
-const languages = [
-    "My name is",
-    "สวัสดี ผมชื่อว่า",
-    "Mi nombre es",
-    "Je m'appelle",
-    "Mein Name ist",
-    "私の名前は"
-];
+// Define the car data type
+interface CarData {
+  plate_number: string;
+  city: string;
+  detected_at: string;
+  image_data: string | null;
+}
 
 export default function Home() {
-    const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-    const titleRefs = useRef<(HTMLHeadingElement | null)[]>([]);
-    const [currentLanguage, setCurrentLanguage] = useState(0);
-    const [fade, setFade] = useState(true);
+  const [data, setData] = useState<CarData[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-    // Set up the refs array to match the number of cards
-    useEffect(() => {
-        cardRefs.current = cardRefs.current.slice(0, mockBlogPosts.length);
-    }, [mockBlogPosts.length]);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("fade-in");
-                        entry.target.classList.remove("fade-out");
-                    } else {
-                        entry.target.classList.add("fade-out");
-                        entry.target.classList.remove("fade-in");
-                    }
-                });
-            },
-            { threshold: 0.1 }
-        );
-
-        // Observer for title elements
-        titleRefs.current.forEach(ref => {
-            if (ref) {
-                observer.observe(ref);
-            }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Check for environment variables
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        
+        console.log("Environment variables loaded:", { 
+          urlAvailable: !!supabaseUrl, 
+          keyAvailable: !!supabaseKey 
         });
+        
+        if (!supabaseUrl || !supabaseKey) {
+          throw new Error("Supabase credentials missing. Check your environment variables.");
+        }
+        
+        // Initialize Supabase client
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        
+        // Perform query - now including image_data column
+        console.log("Attempting to fetch data from car table...");
+        const { data: carData, error: supabaseError } = await supabase
+          .from('car')
+          .select('plate_number, city, detected_at, image_data')
+          .order('detected_at', { ascending: false }); // Show newest first
+        
+        if (supabaseError) {
+          console.error("Supabase error:", supabaseError);
+          throw new Error(`Supabase query error: ${supabaseError.message}`);
+        }
+        
+        console.log("Data fetched successfully:", carData);
+        
+        if (!carData || carData.length === 0) {
+          console.warn("No data found in the car table");
+        }
+        
+        setData(carData);
+      } catch (err: any) {
+        console.error("Error in data fetching:", err);
+        setError(err.message || "An unknown error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        // Observer for card elements
-        cardRefs.current.forEach(ref => {
-            if (ref) {
-                observer.observe(ref);
-            }
-        });
+    fetchData();
+  }, []);
 
-        return () => {
-            titleRefs.current.forEach(ref => {
-                if (ref) observer.unobserve(ref);
-            });
+const formatTimestamp = (timestamptz: string) => {
+  if (!timestamptz) return "N/A";
+  
+  try {
+    // Parse the ISO timestamp string directly
+    // Format: "2023-05-18T17:30:45.123+00:00" -> "2023-05-18 17:30:45"
+    
+    // First, remove any timezone offset (+00:00 or similar)
+    const withoutTimezone = timestamptz.replace(/(\+|-)[0-9]{2}:[0-9]{2}$/, '');
+    
+    // Split by 'T' to separate date and time
+    const [datePart, timeWithExtra] = withoutTimezone.split('T');
+    
+    // Get just the time portion (remove milliseconds)
+    const timePart = timeWithExtra ? timeWithExtra.split('.')[0] : '';
+    
+    // Return formatted date and time
+    return `${datePart} ${timePart}`;
+  } catch (err) {
+    console.error("Error formatting date:", err);
+    return timestamptz; // Return the raw value if formatting fails
+  }
+};
+
+  // Helper function to render base64 image
+  const renderImage = (base64Data: string | null) => {
+    if (!base64Data) return <span className="text-gray-400">No image</span>;
+    
+    try {
+      // Check if the base64 string already includes the data URL prefix
+      const imageSource = base64Data.startsWith('data:image') 
+        ? base64Data 
+        : `data:image/jpeg;base64,${base64Data}`;
+      
+      return (
+        <div className="w-40 h-auto">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={imageSource} 
+            alt="Car image" 
+            className="max-w-full h-auto object-cover rounded border border-gray-300" 
+            onClick={() => window.open(imageSource, '_blank')}
+            style={{ cursor: 'pointer' }}
+          />
+        </div>
+      );
+    } catch (err) {
+      console.error("Error rendering image:", err);
+      return <span className="text-red-500">Image error</span>;
+    }
+  };
+
+  return (
+    <section className="flex flex-col min-h-screen p-6">
+      <h1 className="text-2xl font-bold mb-6">Dashboard Log ตรวจป้ายทะเบียน</h1>
+      
+      <div className="bg-white shadow rounded-lg p-6">
+        {loading ? (
+          <div className="flex justify-center items-center h-40">
+            <p className="text-lg">Loading data...</p>
+          </div>
+        ) : error ? (
+          <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
+            <p className="text-red-700">Error: {error}</p>
+            <p className="text-sm text-red-600 mt-2">
+              Check your browser console for more details.
+            </p>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-xl font-semibold mb-4">ตาราง Data ของรถยนต์:</h2>
             
-            cardRefs.current.forEach(ref => {
-                if (ref) observer.unobserve(ref);
-            });
-        };
-    }, []);
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setFade(false);
-            setCurrentLanguage((prev) => (prev + 1) % languages.length);
-            setTimeout(() => {
-                setFade(true);
-            }, 1000); // Wait for fade-out to complete before setting fade-in
-        }, 3000); // Change language every 3 seconds
-
-        return () => clearInterval(interval);
-    }, []);
-
-    return (
-        <section className="flex flex-col min-h-screen">
-            <div className="mt-[50px] text-center items-center justify-center">
-                <h1 className="font-kanit text-[20px] italic">~/zunzu</h1>
-                <h2 className="font-kanit text-[20px] italic">wall of blog</h2>
-            </div>
-            <div className="pt-[18px]">
-                <h1 
-                    className="justify-start items-start font-kanit pl-[54px] text-[32px] italic"
-                >
-                    Latest Blog
-                </h1>
-                <div className="ml-[52px] bg-black" style={{ width: '207px', height: '1px' }}></div>
-            </div>
-
-            <div className="flex flex-col gap-8 mt-8 mb-16">
-                {mockBlogPosts.map((post, index) => (
-                    <div 
-                        key={post.id}
-                        ref={el => cardRefs.current[index] = el}
-                        className="opacity-0 transition-all duration-700 transform translate-y-10"
-                    >
-                        <Link 
-                            href={`/blog/${post.urls}`} 
-                            className="block w-full no-underline"
-                        >
-                            <Card
-                                className="mx-auto w-[90%] md:w-[75%] lg:w-[688px] h-[157px] rounded-[30px] relative overflow-hidden hover:shadow-lg transition-shadow"
-                                style={{
-                                    backgroundImage: `url('${post.image}')`,
-                                    backgroundPosition: "center",
-                                    backgroundSize: "cover"
-                                }}
-                            >
-                                <div className="absolute inset-0 bg-black/30"></div>
-                                <CardHeader className="pl-4 md:pl-8 lg:ml-[267px] relative z-10 text-white flex flex-col justify-center">
-                                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold">{post.title}</h3>
-                                    <p className="text-sm md:text-base opacity-80">{post.description}</p>
-                                    <Chip size="md" color="primary" variant="faded">
-                                        {post.category}
-                                    </Chip>
-                                </CardHeader>
-                            </Card>
-                        </Link>
-                    </div>
-                ))}
-            </div>
-        </section>
-    );
+            {data && data.length > 0 ? (
+              <>
+                <table className="min-w-full border border-gray-300 mt-4">
+                  <thead>
+                    <tr className="bg-gray-100">
+                      <th className="px-4 py-2 border">เลขทะเบียน</th>
+                      <th className="px-4 py-2 border">เมือง</th>
+                      <th className="px-4 py-2 border">เวลาที่เข้า</th>
+                      <th className="px-4 py-2 border">รูป</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map((car, index) => (
+                      <tr key={index} className="hover:bg-gray-50">
+                        <td className="px-4 py-2 border">{car.plate_number}</td>
+                        <td className="px-4 py-2 border">{car.city}</td>
+                        <td className="px-4 py-2 border">{formatTimestamp(car.detected_at)}</td>
+                        <td className="px-4 py-2 border">{renderImage(car.image_data)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                
+                <div className="mt-8">
+                  <h3 className="text-lg font-semibold mb-2">Raw JSON Data:</h3>
+                  <pre className="bg-gray-100 p-4 rounded overflow-auto max-h-60">
+                    {JSON.stringify(data?.map(item => ({
+                      ...item,
+                      image_data: item.image_data ? '[BASE64_DATA]' : null
+                    })), null, 2)}
+                  </pre>
+                </div>
+              </>
+            ) : (
+              <p className="text-gray-500 italic">ไม่มีรถที่ถูก Log ในเวลานี้.</p>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }
