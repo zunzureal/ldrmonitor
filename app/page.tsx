@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader } from "@/components/ui/card";
+import { Chip } from "@heroui/chip";
 
 // Mock data for blog cards
 const mockBlogPosts = [
@@ -14,31 +15,41 @@ const mockBlogPosts = [
         id: 1,
         title: "Getting Started with Next.js",
         description: "A beginner's guide to setting up your first Next.js project",
-        image: "/grad.png"
+        image: "/grad.png",
+        urls: "graduation",
+        category: "music"
     },
     {
         id: 2,
         title: "CSS Grid Layout Mastery",
         description: "Learn how to create complex layouts with CSS Grid",
-        image: "/grad.png"
+        image: "/grad.png",
+        urls: "",
+        category: "music"
     },
     {
         id: 3,
         title: "React Hooks Deep Dive",
         description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png"
+        image: "/grad.png",
+        urls: "",
+        category: "music"
     },
     {
         id: 4,
         title: "React Hooks Deep Dive",
         description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png"
+        image: "/grad.png",
+        urls: "",
+        category: "music"
     },
     {
         id: 5,
         title: "React Hooks Deep Dive",
         description: "Understanding useState, useEffect and custom hooks",
-        image: "/grad.png"
+        image: "/grad.png",
+        urls: "",
+        category: "music"
     }
 ];
 
@@ -130,7 +141,6 @@ export default function Home() {
                 <div className="ml-[52px] bg-black" style={{ width: '207px', height: '1px' }}></div>
             </div>
 
-            {/* Blog Cards */}
             <div className="flex flex-col gap-8 mt-8 mb-16">
                 {mockBlogPosts.map((post, index) => (
                     <div 
@@ -138,20 +148,28 @@ export default function Home() {
                         ref={el => cardRefs.current[index] = el}
                         className="opacity-0 transition-all duration-700 transform translate-y-10"
                     >
-                        <Card
-                            className="mx-auto w-[90%] md:w-[75%] lg:w-[688px] h-[157px] rounded-[30px] relative overflow-hidden"
-                            style={{
-                                backgroundImage: `url('${post.image}')`,
-                                backgroundPosition: "center",
-                                backgroundSize: "cover"
-                            }}
+                        <Link 
+                            href={`/blog/${post.urls}`} 
+                            className="block w-full no-underline"
                         >
-                            <div className="absolute inset-0 bg-black/30"></div>
-                            <CardHeader className="pl-4 md:pl-8 lg:ml-[267px] relative z-10 text-white flex flex-col justify-center">
-                                <h3 className="text-lg md:text-xl lg:text-2xl font-bold">{post.title}</h3>
-                                <p className="text-sm md:text-base opacity-80">{post.description}</p>
-                            </CardHeader>
-                        </Card>
+                            <Card
+                                className="mx-auto w-[90%] md:w-[75%] lg:w-[688px] h-[157px] rounded-[30px] relative overflow-hidden hover:shadow-lg transition-shadow"
+                                style={{
+                                    backgroundImage: `url('${post.image}')`,
+                                    backgroundPosition: "center",
+                                    backgroundSize: "cover"
+                                }}
+                            >
+                                <div className="absolute inset-0 bg-black/30"></div>
+                                <CardHeader className="pl-4 md:pl-8 lg:ml-[267px] relative z-10 text-white flex flex-col justify-center">
+                                    <h3 className="text-lg md:text-xl lg:text-2xl font-bold">{post.title}</h3>
+                                    <p className="text-sm md:text-base opacity-80">{post.description}</p>
+                                    <Chip size="md" color="primary" variant="faded">
+                                        {post.category}
+                                    </Chip>
+                                </CardHeader>
+                            </Card>
+                        </Link>
                     </div>
                 ))}
             </div>
