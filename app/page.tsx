@@ -10,6 +10,7 @@ interface CarData {
   city: string;
   detected_at: string;
   image_data: string | null;
+  status: string | null;
 }
 
 export default function Home() {
@@ -43,8 +44,8 @@ export default function Home() {
         // Perform query - now including image_data column
         console.log("Attempting to fetch data from car table...");
         const { data: carData, error: supabaseError } = await supabase
-          .from('car_in')
-          .select('plate_number, city, detected_at, image_data')
+          .from('car_all')
+          .select('plate_number, city, detected_at, image_data, status')
           .order('detected_at', { ascending: false }); // Show newest first
         
         if (supabaseError) {
@@ -156,6 +157,25 @@ export default function Home() {
     }
   };
 
+  // Helper function to render status with styling
+  const renderStatus = (status: string | null) => {
+    if (!status) return <span className="text-gray-400">N/A</span>;
+    
+    // Style status based on value
+    const statusLower = status.toLowerCase();
+    let statusClass = "px-2 py-1 rounded-full text-xs font-medium ";
+    
+    if (statusLower.includes('in') || statusLower === 'เข้า' || statusLower === 'inside') {
+      statusClass += "bg-green-100 text-green-800";
+    } else if (statusLower.includes('out') || statusLower === 'ออก' || statusLower === 'outside') {
+      statusClass += "bg-red-100 text-red-800";
+    } else {
+      statusClass += "bg-gray-100 text-gray-800";
+    }
+    
+    return <span className={statusClass}>{status}</span>;
+  };
+
   // Toggle sidebar visibility
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -163,9 +183,9 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar - using hidden class instead of w-0 */}
-      <aside className={`w-64 bg-white shadow-lg h-screen sticky top-0 z-10 ${sidebarOpen ? '' : 'hidden'}`}>
-        <div className="p-4 h-full overflow-y-auto">
+      {/* Sidebar */}
+      <aside className={`${sidebarOpen ? 'w-64' : 'w-0'} bg-white shadow-lg transition-all duration-300 ease-in-out h-screen sticky top-0 z-10 overflow-hidden`}>
+        <div className={`p-4 h-full overflow-y-auto ${sidebarOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
           <h2 className="text-xl font-bold mb-6 text-gray-800">ตัวกรองข้อมูล</h2>
           
           {/* Date Filter UI in Sidebar */}
@@ -217,7 +237,7 @@ export default function Home() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-grow p-6">
+      <main className="flex-grow p-6 transition-all duration-300 ease-in-out overflow-hidden">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Dashboard Log ตรวจป้ายทะเบียน</h1>
           
@@ -244,10 +264,13 @@ export default function Home() {
           </button>
         </div>
         
-        <div className="bg-white shadow rounded-lg p-6">
+        <div className="bg-white shadow rounded-lg p-6 h-full overflow-y-auto">
           {loading ? (
             <div className="flex justify-center items-center h-40">
-              <p className="text-lg">Loading data...</p>
+              <div className="flex items-center space-x-2">
+                <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+                <p className="text-lg">Loading data...</p>
+              </div>
             </div>
           ) : error ? (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
@@ -269,19 +292,21 @@ export default function Home() {
                     <table className="min-w-full border border-gray-300 mt-4">
                       <thead>
                         <tr className="bg-gray-100">
-                          <th className="px-4 py-2 border">เลขทะเบียน</th>
-                          <th className="px-4 py-2 border">เมือง</th>
-                          <th className="px-4 py-2 border">เวลาที่เข้า</th>
-                          <th className="px-4 py-2 border">รูป</th>
+                          <th className="px-4 py-2 border text-left">เลขทะเบียน</th>
+                          <th className="px-4 py-2 border text-left">เมือง</th>
+                          <th className="px-4 py-2 border text-left">เวลาที่เข้า</th>
+                          <th className="px-4 py-2 border text-left">รูป</th>
+                          <th className="px-4 py-2 border text-left">สถานะรถ</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {filteredData.map((car_in, index) => (
+                        {filteredData.map((car, index) => (
                           <tr key={index} className="hover:bg-gray-50">
-                            <td className="px-4 py-2 border">{car_in.plate_number}</td>
-                            <td className="px-4 py-2 border">{car_in.city}</td>
-                            <td className="px-4 py-2 border">{formatTimestamp(car_in.detected_at)}</td>
-                            <td className="px-4 py-2 border">{renderImage(car_in.image_data)}</td>
+                            <td className="px-4 py-2 border font-medium">{car.plate_number}</td>
+                            <td className="px-4 py-2 border">{car.city}</td>
+                            <td className="px-4 py-2 border">{formatTimestamp(car.detected_at)}</td>
+                            <td className="px-4 py-2 border">{renderImage(car.image_data)}</td>
+                            <td className="px-4 py-2 border">{renderStatus(car.status)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -290,7 +315,7 @@ export default function Home() {
                   
                   <div className="mt-8">
                     <h3 className="text-lg font-semibold mb-2">Raw JSON Data:</h3>
-                    <pre className="bg-gray-100 p-4 rounded overflow-auto max-h-60">
+                    <pre className="bg-gray-100 p-4 rounded overflow-auto max-h-60 text-sm">
                       {JSON.stringify(filteredData?.map(item => ({
                         ...item,
                         image_data: item.image_data ? '[BASE64_DATA]' : null
@@ -299,7 +324,9 @@ export default function Home() {
                   </div>
                 </>
               ) : (
-                <p className="text-gray-500 italic">ไม่มีรถที่ถูก Log ในช่วงเวลาที่เลือก</p>
+                <div className="text-center py-8">
+                  <p className="text-gray-500 italic text-lg">ไม่มีรถที่ถูก Log ในช่วงเวลาที่เลือก</p>
+                </div>
               )}
             </div>
           )}
